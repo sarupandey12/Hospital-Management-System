@@ -126,5 +126,5 @@ ob_start(); // Start output buffer
 
 <?php
 $content = ob_get_clean();
-include("partials/master.php"); // Inject into master layout
+include("../partials/master.php"); // Inject into master layout
 ?>
