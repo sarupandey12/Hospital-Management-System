@@ -9,12 +9,16 @@ ob_start(); // Start output buffer
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
       <h3 class="text-lg font-semibold text-gray-600">Total Patients</h3>
-      <p class="text-3xl font-bold text-green-600 mt-2">12</p>
+      <!-- <p class="text-3xl font-bold text-green-600 mt-2">12</p> -->
+      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2" id="patient-count-value">Loading...</span></div>
+
     </div>
 
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
       <h3 class="text-lg font-semibold text-gray-600">Doctors</h3>
-      <p class="text-3xl font-bold text-green-600 mt-2">5</p>
+      <!-- <p class="text-3xl font-bold text-green-600 mt-2">5</p> -->
+      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2" id="doctor-count-value">Loading...</span></div>
+
     </div>
 
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
@@ -68,3 +72,26 @@ ob_start(); // Start output buffer
 $content = ob_get_clean(); // Store content in $content
 include("partials/master.php"); // Inject into master layout
 ?>
+
+<!-- jQuery AJAX code -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Send an AJAX request to fetch counts
+    $.ajax({
+      url: 'count.php', // The PHP file to get the counts
+      type: 'GET',
+      dataType: 'json', // Expecting JSON response
+      success: function (response) {
+        // Update the UI with the data returned
+        $('#doctor-count-value').text(response.total_doctors);
+        $('#patient-count-value').text(response.total_patients);
+        $('#appointment-count-value').text(response.total_appointments);
+      },
+      error: function () {
+        // Handle error if any
+        alert('Error fetching data');
+      }
+    });
+  });
+</script>

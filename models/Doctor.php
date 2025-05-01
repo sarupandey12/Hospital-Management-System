@@ -48,6 +48,15 @@ class Doctor
         $stmt = $this->pdo->prepare("DELETE FROM doctors WHERE id = ?");
         $stmt->execute([$id]);
     }
-    
+
+    public function countDoctors()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) AS total_doctors FROM doctors");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_doctors'];
+    }
+
+
 
 }

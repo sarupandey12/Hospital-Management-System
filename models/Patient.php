@@ -49,5 +49,13 @@ class Patient
         }
         return false;
     }
+    public function countPatients()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) AS total_patients FROM patients");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_patients'];
+    }
+
 }
 ?>
