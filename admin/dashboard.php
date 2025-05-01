@@ -1,5 +1,12 @@
 <?php
 ob_start(); // Start output buffer
+session_start();
+
+// Redirect if not logged in
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../admin/index.php");
+    exit();
+}
 ?>
 
 <!-- Main Content -->
@@ -26,10 +33,10 @@ ob_start(); // Start output buffer
       <p class="text-3xl font-bold text-green-600 mt-2">20</p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+    <!-- <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
       <h3 class="text-lg font-semibold text-gray-600">Departments</h3>
       <p class="text-3xl font-bold text-green-600 mt-2">12</p>
-    </div>
+    </div> -->
   </div>
 
   <!-- Recent Activity -->

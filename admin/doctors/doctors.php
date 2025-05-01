@@ -1,4 +1,6 @@
 <?php
+
+use Models\Doctor;
 ob_start(); // Start output buffer
 
 require_once '../../models/Doctor.php'; // Include the Doctor model
@@ -63,7 +65,9 @@ $doctors = $doctor->getAllDoctors();
                             <td class="py-4 px-6 font-medium text-gray-900"><?= ++$key ?></td>
                             <td class="py-4 px-6 flex items-center space-x-3">
                                 <img src="<?= !empty($doctor['profile_image']) ? '../../public/uploads/doctors/' . $doctor['profile_image'] : '../../public/default.jpg'; ?>"
-                                    height="50px" width="50px" alt="Doctor Image">
+                                    alt="Doctor Image"
+                                    style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%; border: 2px solid #ccc;">
+
 
 
                                 <div>
@@ -71,18 +75,33 @@ $doctors = $doctor->getAllDoctors();
                                     <div class="text-gray-500 text-xs"><?= $doctor['email'] ?></div>
                                 </div>
                             </td>
-                            <td class="py-4 px-6"><?= $doctor['specialization'] ?></td>
+                            <?php
+                            $specializations = explode(',', $doctor['specialization']);
+                            $firstTwo = array_slice($specializations, 0, 2);
+                            $display = implode(', ', $firstTwo);
+
+                            $remaining = count($specializations) - 2;
+                            if ($remaining > 0) {
+                                $display .= " + $remaining more";
+                            }
+                            ?>
+                            <td class="py-4 px-6"><?= htmlspecialchars($display) ?></td>
+
                             <td class="py-4 px-6 text-gray-600"><?= $doctor['phone'] ?></td>
                             <td class="py-4 px-6">
                                 <span
                                     class=" <?= $doctor['status'] == 'active' ? ' bg-green-400 text-white' : 'bg-red-400 text-white' ?> text-green-700 text-xs font-semibold px-2 py-1 rounded-full"><?= $doctor['status'] == 'active' ? 'Active' : 'In Active' ?></span>
                             </td>
                             <td class="py-4 px-6 text-right">
-                                <div class="flex justify-end space-x-2">
-                                    <a href="#" class="text-blue-600 hover:text-blue-900">
+                                <div class="flex justify-end space-x-6">
+                                    <!-- <a href="#" class="text-blue-600 hover:text-blue-900">
                                         <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    <a href="#" class="text-yellow-500 hover:text-yellow-700">
+                                    </a> -->
+
+                                    <button onclick="loadDoctorModal(<?= $doctor['id'] ?>)"><i
+                                            class="fa-solid fa-eye"></i></button>
+                                    <a href="add_doctor.php?did=<?= $doctor['id'] ?>"
+                                        class="text-yellow-500 hover:text-yellow-700">
                                         <i class="fa-solid fa-pen-to-square"></i> <!-- fa-edit is now pen-to-square -->
                                     </a>
                                     <a href="../../controllers/DoctorController.php?action=delete&id=<?= $doctor['id'] ?>"
@@ -102,8 +121,31 @@ $doctors = $doctor->getAllDoctors();
             </tbody>
         </table>
     </div>
-
+    <!-- Modal Container -->
+    <div id="modalContainer"></div>
 </main>
+
+<script>
+    function loadDoctorModal(doctorId) {
+        fetch('show.php?id=' + doctorId)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('modalContainer').innerHTML = data;
+                document.getElementById('doctorViewModal').classList.remove('hidden');
+            });
+    }
+
+
+    // to close modal
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('.close-modal')) {
+            const modal = document.getElementById('doctorViewModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+    });
+</script>
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
@@ -116,6 +158,24 @@ $doctors = $doctor->getAllDoctors();
         }
     });
 </script>
+
+
+<script>
+    document.addEventListener('click', function (event) {
+        const modal = document.getElementById('doctorViewModal');
+
+        // Close button logic
+        if (event.target.closest('.close-modal')) {
+            modal.classList.add('hidden');
+        }
+
+        // Click outside modal content
+        if (event.target !== modal) {
+            modal.classList.add('hidden');
+        }
+    });
+</script>
+
 
 <?php
 $content = ob_get_clean();

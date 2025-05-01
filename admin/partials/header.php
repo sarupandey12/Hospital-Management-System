@@ -1,11 +1,11 @@
 <?php
-session_start();
+// session_start();
 
 // Redirect if not logged in
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../admin/index.php");
-    exit();
-}
+// if (!isset($_SESSION['admin_id'])) {
+//     header("Location: ../admin/index.php");
+//     exit();
+// }
 
 // Get current page and folder
 $current_page = basename($_SERVER['PHP_SELF']);
@@ -32,7 +32,7 @@ function isActive($check, $type = 'page')
     <title>Admin Dashboard - HMS</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -86,11 +86,10 @@ function isActive($check, $type = 'page')
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-2">
-
-            <!-- Top Bar -->
+        <main class="flex-1 relative overflow-hidden">
+            <!-- Fixed Top Bar -->
             <header
-                class="flex justify-between items-center bg-white shadow-lg rounded-lg p-4 transition-all duration-300 hover:shadow-xl">
+                class="fixed top-0 left-64 right-0 z-50 flex justify-between items-center bg-white shadow-lg rounded-lg p-4 transition-all duration-300 hover:shadow-xl">
                 <h2
                     class="text-3xl font-bold text-gray-800 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
                     Dashboard
@@ -108,3 +107,6 @@ function isActive($check, $type = 'page')
                     </div>
                 </div>
             </header>
+
+            <!-- Scrollable Content Area -->
+            <div class="overflow-y-auto h-[calc(100vh-96px)] mt-24 p-2">
