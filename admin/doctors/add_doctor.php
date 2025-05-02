@@ -260,7 +260,7 @@ if ($isEditMode) {
                                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                             </div>
-                                            <input type="number" id="experience_years" name="experience_years" min="0"
+                                            <input type="number" id="experience_years" name="experience_years" min="0" max="100"
                                                 value="<?= htmlspecialchars($isEditMode ? $doctor['experience_years'] : ($_POST['experience_years'] ?? '')) ?>"
                                                 class="pl-10 block w-full rounded-md border  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-20 transition duration-200 py-3">
                                         </div>
@@ -438,7 +438,7 @@ if ($isEditMode) {
                     <!-- Hidden field to preserve existing image if no new file is uploaded -->
                     <input type="hidden" name="existing_profile_image" value="<?= htmlspecialchars($doctor['profile_image']) ?>">
                 <?php endif; ?>
-                
+
             </div>
         </div>
     </div>

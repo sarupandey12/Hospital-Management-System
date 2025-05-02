@@ -75,7 +75,7 @@ function isActive($check, $type = 'page')
                     Settings
                 </a>
 
-                <form action="<?php echo $base_path; ?>controllers/AdminController.php" method="POST">
+                <form action="../<?php echo $base_path; ?>controllers/AdminController.php" method="POST">
                     <input type="hidden" name="action" value="logout" />
                     <button type="submit"
                         class="block w-full text-left py-2 px-4 rounded-lg text-red-600 hover:bg-red-100">

@@ -37,8 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $medical_history = $_POST['medical_history'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm_password'];
+    $priority=$_POST['priority_id'];
+    $emergency=$_POST['is_emergency'];
 
-    if (empty($full_name) || empty($email) || empty($phone) || empty($gender) || empty($date_of_birth) || empty($address) || empty($blood_group)) {
+    if (empty($full_name) || empty($email) || empty($phone)) {
         header("Location: ../patients/register.php?error=Please fill in all required fields.");
         exit();
     }
@@ -53,7 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'address' => $address,
             'blood_group' => $blood_group,
             'medical_history' => $medical_history,
-            'password' => $password  // Pass password for hashing inside model
+            'password' => $password,  // Pass password for hashing inside model
+            'priority_id'=>$priority,
+            'is_emergency'=>$emergency,
         ];
 
         $success = $patientModal->register($dataArray);

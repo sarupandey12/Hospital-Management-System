@@ -15,7 +15,7 @@ class Patient
         $hashedPassword = password_hash($dataValues['password'], PASSWORD_BCRYPT);
         $stmt = $this->pdo->prepare(
             "INSERT INTO patients 
-            (full_name, email, password, phone, gender, date_of_birth, address, blood_group, medical_history, registration_date, status) 
+            (full_name, email, password, phone, gender, date_of_birth, address, blood_group, medical_history,priority,is_emergency, registration_date, status) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
 
@@ -31,6 +31,8 @@ class Patient
             $dataValues['address'],
             $dataValues['blood_group'],
             $dataValues['medical_history'],
+            $dataValues['priority_id'],
+            $dataValues['is_emergency'],
             $registrationDate,
             $dataValues['status'],
         ]);
