@@ -9,18 +9,27 @@ class Patient
     {
         $this->pdo = $pdo;
     }
-
     public function register($dataValues)
     {
+        // Validate priority value exists in priority_levels table
+        if (isset($dataValues['priority'])) {
+            $priorityCheck = $this->pdo->prepare("SELECT priority_id FROM priority_levels WHERE priority_id = ?");
+            $priorityCheck->execute([$dataValues['priority']]);
+            if (!$priorityCheck->fetch()) {
+                // Priority doesn't exist, set to NULL or default value
+                $dataValues['priority'] = null; // or a default valid priority_id
+            }
+        }
+    
         $hashedPassword = password_hash($dataValues['password'], PASSWORD_BCRYPT);
         $stmt = $this->pdo->prepare(
             "INSERT INTO patients 
-            (full_name, email, password, phone, gender, date_of_birth, address, blood_group, medical_history,priority,is_emergency, registration_date, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            (full_name, email, password, phone, gender, date_of_birth, address, blood_group, medical_history, priority, symptoms, is_emergency, registration_date, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-
+        
         $registrationDate = date('Y-m-d'); // Current date
-
+    
         return $stmt->execute([
             $dataValues['full_name'],
             $dataValues['email'],
@@ -31,7 +40,8 @@ class Patient
             $dataValues['address'],
             $dataValues['blood_group'],
             $dataValues['medical_history'],
-            $dataValues['priority_id'],
+            $dataValues['priority'],
+            $dataValues['symptoms'],
             $dataValues['is_emergency'],
             $registrationDate,
             $dataValues['status'],

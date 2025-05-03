@@ -24,26 +24,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     }
 }
 
+
 // Then handle registration if register form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     // Collect form data and sanitize
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $gender = $_POST['gender'];
-    $date_of_birth = $_POST['date_of_birth'];
-    $address = $_POST['address'];
-    $blood_group = $_POST['blood_group'];
-    $medical_history = $_POST['medical_history'];
+    $gender = $_POST['gender']??'';
+    $date_of_birth = $_POST['date_of_birth'] ?? '';
+    $address = $_POST['address'] ?? '';
+    $blood_group = $_POST['blood_group'] ?? '';
+    $medical_history = $_POST['medical_history'] ?? '';
     $password = $_POST['password'];
     $confirm = $_POST['confirm_password'];
-    $priority=$_POST['priority_id'];
-    $emergency=$_POST['is_emergency'];
+    // $priority = $_POST['priority']??'';
+    $priority = isset($_POST['priority']) ? intval($_POST['priority']) : null;
 
-    if (empty($full_name) || empty($email) || empty($phone)) {
+    $status = $_POST['status']??'';
+    $emergency = $_POST['is_emergency']??'';
+    $symptoms = $_POST['symptoms']??'';
+
+    if (empty($full_name) || empty($email) || empty($phone)||empty($priority)) {
         header("Location: ../patients/register.php?error=Please fill in all required fields.");
         exit();
     }
+    // print_r($_POST);
+    // exit;
 
     if ($password === $confirm) {
         $dataArray = [
@@ -56,8 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'blood_group' => $blood_group,
             'medical_history' => $medical_history,
             'password' => $password,  // Pass password for hashing inside model
-            'priority_id'=>$priority,
-            'is_emergency'=>$emergency,
+            'priority' => $priority,
+            'is_emergency' => $emergency,
+            'symptoms'=>$symptoms,
+            'status'=>$status,
         ];
 
         $success = $patientModal->register($dataArray);

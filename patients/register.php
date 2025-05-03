@@ -205,7 +205,8 @@ $priorities = $priorityModal->getAllPriority();
                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['confirm_password_error']) ? 'border-red-500' : ''; ?>">
                         <?php if (isset($_GET['confirm_password_error'])): ?>
                             <p class="text-red-500 text-sm mt-1">
-                                <?php echo htmlspecialchars($_GET['confirm_password_error']); ?></p>
+                                <?php echo htmlspecialchars($_GET['confirm_password_error']); ?>
+                            </p>
                         <?php endif; ?>
                     </div>
 
@@ -290,6 +291,25 @@ $priorities = $priorityModal->getAllPriority();
 
 
     </script>
+    <script>
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function () {
+            const selectedValue = this.getAttribute('data-value');
+            const description = this.getAttribute('data-description');
+            const label = this.textContent;
+
+            // Set the selected value in the hidden input
+            document.getElementById('priority').value = selectedValue;
+
+            // Update the selected text
+            document.getElementById('selected-priority').textContent = label;
+
+            // Update the description if needed
+            document.getElementById('priority-description').textContent = description;
+        });
+    });
+</script>
+
 </body>
 
 </html>
