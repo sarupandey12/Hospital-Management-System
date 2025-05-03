@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         header("Location: ../patients/dashboard.php");
         exit;
     } else {
-        header("Location: ../patients/login.php?error=Invalid credentials.");
+        header("Location: ../patients/index.php?error=Invalid credentials.");
         exit;
     }
 }
