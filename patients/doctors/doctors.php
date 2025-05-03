@@ -4,7 +4,7 @@ use Models\Doctor;
 ob_start(); // Start output buffer
 
 require_once '../../models/Doctor.php'; // Include the Doctor model
-
+require_once __DIR__."/../session.php";
 $doctor = new Doctor($pdo);           // Initialize Doctor with PDO
 
 $doctors = $doctor->getAllDoctors();

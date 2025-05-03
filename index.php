@@ -30,7 +30,7 @@
     <p class="text-lg md:text-xl mb-6">Efficient. Reliable. Digital. Your health, our priority.</p>
     
     <div class="space-y-4">
-      <a href="#" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition inline-block">
+      <a href="patients/appointments/book_appointment.php" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition inline-block">
         Book an Appointment
       </a>
       <br/>

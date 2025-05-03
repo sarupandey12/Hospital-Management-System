@@ -2,11 +2,8 @@
 ob_start(); // Start output buffer
 session_start();
 
-// Redirect if not logged in
-if (!isset($_SESSION['patient_id'])) {
-    header("Location: ../patient/index.php");
-    exit();
-}
+require_once __DIR__."/../session.php";
+
 ?>
 
 

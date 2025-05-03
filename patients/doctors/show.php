@@ -1,6 +1,8 @@
 <?php
 
 use Models\Doctor;
+require_once __DIR__."/../session.php";
+
 require_once '../../models/Doctor.php'; // Include the Doctor model
 $id = $_GET['id'];
 
