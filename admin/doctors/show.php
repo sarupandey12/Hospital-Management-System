@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../session.php'; // for if admin is not logged in 
 
 use Models\Doctor;
 require_once '../../models/Doctor.php'; // Include the Doctor model

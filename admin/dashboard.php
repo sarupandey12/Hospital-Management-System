@@ -1,13 +1,12 @@
 <?php
 ob_start(); // Start output buffer
-session_start();
+// session_start();
 
-// Redirect if not logged in
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../admin/index.php");
-    exit();
-}
+// require_once "session.php";
+require_once __DIR__ . '/session.php';
+
 ?>
+
 
 <!-- Main Content -->
 <main class="flex-1 p-6">
@@ -17,14 +16,16 @@ if (!isset($_SESSION['admin_id'])) {
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
       <h3 class="text-lg font-semibold text-gray-600">Total Patients</h3>
       <!-- <p class="text-3xl font-bold text-green-600 mt-2">12</p> -->
-      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2" id="patient-count-value">Loading...</span></div>
+      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2"
+          id="patient-count-value">Loading...</span></div>
 
     </div>
 
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
       <h3 class="text-lg font-semibold text-gray-600">Doctors</h3>
       <!-- <p class="text-3xl font-bold text-green-600 mt-2">5</p> -->
-      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2" id="doctor-count-value">Loading...</span></div>
+      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2"
+          id="doctor-count-value">Loading...</span></div>
 
     </div>
 

@@ -4,7 +4,7 @@ session_start();
 
 // Redirect if not logged in
 if (!isset($_SESSION['patient_id'])) {
-    header("Location: ../patient/index.php");
+    header("Location: index.php");
     exit();
 }
 ?>

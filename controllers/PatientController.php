@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../models/Patient.php';
 require_once __DIR__ . '/../config/db.php';
 
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $gender = $_POST['gender']??'';
+    $gender = $_POST['gender'] ?? '';
     $date_of_birth = $_POST['date_of_birth'] ?? '';
     $address = $_POST['address'] ?? '';
     $blood_group = $_POST['blood_group'] ?? '';
@@ -41,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     // $priority = $_POST['priority']??'';
     $priority = isset($_POST['priority']) ? intval($_POST['priority']) : null;
 
-    $status = $_POST['status']??'';
-    $emergency = $_POST['is_emergency']??'';
-    $symptoms = $_POST['symptoms']??'';
+    $status = $_POST['status'] ?? '';
+    $emergency = $_POST['is_emergency'] ?? '';
+    $symptoms = $_POST['symptoms'] ?? '';
 
-    if (empty($full_name) || empty($email) || empty($phone)||empty($priority)) {
+    if (empty($full_name) || empty($email) || empty($phone) || empty($priority)) {
         header("Location: ../patients/register.php?error=Please fill in all required fields.");
         exit();
     }
@@ -65,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'password' => $password,  // Pass password for hashing inside model
             'priority' => $priority,
             'is_emergency' => $emergency,
-            'symptoms'=>$symptoms,
-            'status'=>$status,
+            'symptoms' => $symptoms,
+            'status' => $status,
         ];
 
         $success = $patientModal->register($dataArray);
@@ -84,8 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 }
 
 // If neither login nor register form is submitted
-header("Location: ../patients/login.php");
-exit();
+// header("Location: ../patients/index.php");
+// exit();
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['patient_logout'])) {
+    if ($_POST['patient_logout'] === 'logout') {
+        $patientModal->logout();
+    }
+}
+
 
 
 function slugify($text)

@@ -2,12 +2,14 @@
 
 use Models\Doctor;
 ob_start(); // Start output buffer
+require_once __DIR__ . '/../session.php'; // for if admin is not logged in 
 
 require_once '../../models/Doctor.php'; // Include the Doctor model
 
-$doctor = new Doctor($pdo);           // Initialize Doctor with PDO
 
+$doctor = new Doctor($pdo);           // Initialize Doctor with PDO
 $doctors = $doctor->getAllDoctors();
+
 
 ?>
 

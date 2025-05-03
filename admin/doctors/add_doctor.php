@@ -1,9 +1,10 @@
 <?php
-
 use Models\Doctor;
 
+require_once __DIR__ . '/../session.php'; // For files in admin subfolders
 require_once(__DIR__ . "/../../app/Enums/Specialization.php");
 use Enums\Specialization;
+
 
 ob_start(); // Start output buffer
 

@@ -35,13 +35,9 @@ class Admin
 
     function logout()
     {
-        session_start();
-
-        // Unset all session variables
-        $_SESSION = array();
-
-        // Destroy the session
-        session_destroy();
+        // Only unset admin-related session variables
+        unset($_SESSION['admin_id']);
+        unset($_SESSION['admin_name']);
 
         // Redirect to login page
         header("Location: ../index.php");

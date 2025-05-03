@@ -1,5 +1,7 @@
 <?php
 
+require_once "session.php";
+
 use Models\Doctor;
 
 require_once __DIR__ . '/../models/Doctor.php';

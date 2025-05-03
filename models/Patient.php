@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/../config/db.php';
 
 class Patient
@@ -20,16 +23,16 @@ class Patient
                 $dataValues['priority'] = null; // or a default valid priority_id
             }
         }
-    
+
         $hashedPassword = password_hash($dataValues['password'], PASSWORD_BCRYPT);
         $stmt = $this->pdo->prepare(
             "INSERT INTO patients 
             (full_name, email, password, phone, gender, date_of_birth, address, blood_group, medical_history, priority, symptoms, is_emergency, registration_date, status) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        
+
         $registrationDate = date('Y-m-d'); // Current date
-    
+
         return $stmt->execute([
             $dataValues['full_name'],
             $dataValues['email'],
@@ -67,6 +70,20 @@ class Patient
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total_patients'];
+    }
+
+    public function logout()
+    {
+
+        session_start();
+
+        // Only unset patient-related session variables
+        unset($_SESSION['patient_id']);
+        unset($_SESSION['patient_name']);
+
+        // Redirect to login page
+        header("Location: ../index.php");
+        exit();
     }
 
 }

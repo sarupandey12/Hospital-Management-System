@@ -7,6 +7,7 @@
 //     exit();
 // }
 
+
 // Get current page and folder
 $current_page = basename($_SERVER['PHP_SELF']);
 $current_folder = basename(dirname($_SERVER['PHP_SELF']));
@@ -15,7 +16,8 @@ $current_folder = basename(dirname($_SERVER['PHP_SELF']));
 $base_path = ($current_folder === 'patients') ? '' : '../';
 
 // Helper function for active class
-function isActive($check, $type = 'page') {
+function isActive($check, $type = 'page')
+{
     global $current_page, $current_folder;
     if ($type === 'page') {
         return $current_page === $check ? 'text-blue-600 border-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300';
@@ -90,11 +92,10 @@ function isActive($check, $type = 'page') {
                             class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('dashboard.php'); ?>">
                             Dashboard
                         </a>
-                        <a href="<?= $base_path ?>appointments/book_appointment.php"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-s m font-medium <?= isActive('book_appointment.php'); 
-                                // Also check if we're in appointments folder
-                                echo ($current_folder === 'appointments') ? ' text-blue-600 border-blue-600' : '';
-                            ?>">
+                        <a href="<?= $base_path ?>appointments/book_appointment.php" class="inline-flex items-center px-1 pt-1 border-b-2 text-s m font-medium <?= isActive('book_appointment.php');
+                          // Also check if we're in appointments folder
+                          echo ($current_folder === 'appointments') ? ' text-blue-600 border-blue-600' : '';
+                          ?>">
                             Appointments
                         </a>
                         <!-- <a href="<?= $base_path ?>medical_records.php"
@@ -127,14 +128,31 @@ function isActive($check, $type = 'page') {
                         <div class="ml-4 relative flex-shrink-0">
                             <div class="flex items-center">
                                 <div class="mr-3 text-right hidden sm:block">
-                                    <p class="text-sm font-medium text-gray-700"><?= $_SESSION['patient_name'] ?? 'Patient Name' ?></p>
+                                    <p class="text-sm font-medium text-gray-700">
+                                        <?= $_SESSION['patient_name'] ?? 'Patient Name' ?>
+                                    </p>
                                     <p class="text-xs text-gray-500">Patient ID: P-2023486</p>
                                 </div>
-                                <button type="button"
-                                    class="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    <img class="h-8 w-8 rounded-full object-cover border border-gray-200"
-                                        src="/api/placeholder/150/150" alt="User profile">
-                                </button>
+                                <div class="relative inline-block text-left">
+                                    <!-- Profile Button -->
+                                    <button type="button" id="profileButton"
+                                        class="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <img class="h-8 w-8 rounded-full object-cover border border-gray-200"
+                                            src="/api/placeholder/150/150" alt="User profile">
+                                    </button>
+
+                                    <!-- Dropdown Menu -->
+                                    <div id="profileDropdown"
+                                        class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                        <form action="../controllers/PatientController.php" method="POST"
+                                            name="patient_logout">
+                                            <input type="hidden" name="patient_logout" value="logout">
+                                            <button type="submit"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                                        </form>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -166,3 +184,20 @@ function isActive($check, $type = 'page') {
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const button = document.getElementById('profileButton');
+                const dropdown = document.getElementById('profileDropdown');
+
+                button.addEventListener('click', function (event) {
+                    dropdown.classList.toggle('hidden');
+                });
+
+                // Optional: close dropdown when clicking outside
+                document.addEventListener('click', function (event) {
+                    if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                        dropdown.classList.add('hidden');
+                    }
+                });
+            });
+        </script>
