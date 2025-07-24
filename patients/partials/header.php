@@ -83,9 +83,12 @@ function isActive($check, $type = 'page')
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold text-blue-600">MediCare</span>
+                    <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-heartbeat text-white text-xl"></i>
                     </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">MediCore</span>
+                </div>
                 </div>
                 <div class="flex items-center">
                     <div class="hidden md:ml-6 md:flex md:space-x-8">

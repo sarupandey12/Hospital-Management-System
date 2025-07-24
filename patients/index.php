@@ -207,7 +207,7 @@
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    <a href="patients" class="hidden md:block text-gray-700 hover:text-blue-600 transition-colors">Sign
+                    <a href="" class="hidden md:block text-gray-700 hover:text-blue-600 transition-colors">Sign
                         In</a>
                     <a href="#getstarted" class="btn-primary text-white px-6 py-2 rounded-full hover:shadow-lg">Get
                         Started</a>

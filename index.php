@@ -206,7 +206,7 @@
                         Streamline operations, enhance patient care, and boost efficiency with our comprehensive hospital management system. Built for modern healthcare providers.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <!-- <div class="flex flex-col sm:flex-row gap-4 mb-12">
                         <button class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl">
                             Start Free Trial
                         </button>
@@ -214,7 +214,7 @@
                             <i class="fas fa-play-circle text-xl"></i>
                             <span class="font-semibold">Watch Demo</span>
                         </button>
-                    </div>
+                    </div> -->
 
                     <div class="grid grid-cols-3 gap-8">
                         <div class="text-center">
