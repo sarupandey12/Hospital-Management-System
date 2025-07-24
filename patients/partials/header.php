@@ -15,13 +15,16 @@ $current_folder = basename(dirname($_SERVER['PHP_SELF']));
 $base_path = ($current_folder === 'patients') ? '' : '../';
 
 // Helper function for active class
-function isActive($check, $type = 'page') {
+function isActive($check, $type = 'page')
+{
     global $current_page, $current_folder;
     if ($type === 'page') {
         return $current_page === $check ? 'text-blue-600 border-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300';
     }
     return $current_folder === $check ? 'bg-green-100 text-green-600' : '';
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,11 +93,10 @@ function isActive($check, $type = 'page') {
                             class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('dashboard.php'); ?>">
                             Dashboard
                         </a>
-                        <a href="<?= $base_path ?>appointments/book_appointment.php"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-s m font-medium <?= isActive('book_appointment.php'); 
-                                // Also check if we're in appointments folder
-                                echo ($current_folder === 'appointments') ? ' text-blue-600 border-blue-600' : '';
-                            ?>">
+                        <a href="<?= $base_path ?>appointments/show_appointment.php" class="inline-flex items-center px-1 pt-1 border-b-2 text-s m font-medium <?= isActive('show_appointment.php');
+                          // Also check if we're in appointments folder
+                          echo ($current_folder === 'appointments') ? ' text-blue-600 border-blue-600' : '';
+                          ?>">
                             Appointments
                         </a>
                         <!-- <a href="<?= $base_path ?>medical_records.php"
@@ -102,13 +104,24 @@ function isActive($check, $type = 'page') {
                             Medical Records
                         </a> -->
                         <a href="<?= $base_path ?>services.php"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('medical_records.php'); ?>">
+                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('services.php'); ?>">
                             Services
                         </a>
                         <a href="<?= $base_path ?>doctors/doctors.php"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('medical_records.php'); ?>">
+                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('doctors.php'); ?>">
                             Doctors
                         </a>
+
+                        <form action="<?= ".././controllers/PatientController.php" ?>" method="POST"
+                            class="inline">
+                            <button type="submit" name="patient_logout"
+                                class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium text-red-600 hover:text-red-800">
+                                Logout
+                            </button>
+                        </form>
+
+
+
                     </div>
                     <div class="flex items-center ml-6">
                         <div class="relative">
@@ -127,7 +140,9 @@ function isActive($check, $type = 'page') {
                         <div class="ml-4 relative flex-shrink-0">
                             <div class="flex items-center">
                                 <div class="mr-3 text-right hidden sm:block">
-                                    <p class="text-sm font-medium text-gray-700"><?= $_SESSION['patient_name'] ?? 'Patient Name' ?></p>
+                                    <p class="text-sm font-medium text-gray-700">
+                                        <?= $_SESSION['patient_name'] ?? 'Patient Name' ?>
+                                    </p>
                                     <p class="text-xs text-gray-500">Patient ID: P-2023486</p>
                                 </div>
                                 <button type="button"
