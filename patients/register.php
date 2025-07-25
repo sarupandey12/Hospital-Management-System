@@ -145,7 +145,7 @@ $priorities = $priorityModal->getAllPriority();
                         <?php endif; ?>
                     </div>
 
-                    <div>
+                    <!-- <div>
                         <label for="priority" class="block text-gray-700 font-medium mb-2">Priority <span
                                 class="text-red-500">*</span></label>
                         <div class="custom-dropdown">
@@ -169,7 +169,7 @@ $priorities = $priorityModal->getAllPriority();
                             <p class="text-red-500 text-sm mt-1"><?php echo htmlspecialchars($_GET['priority_error']); ?>
                             </p>
                         <?php endif; ?>
-                    </div>
+                    </div> -->
 
                     <div>
                         <label for="blood_group" class="block text-gray-700 font-medium mb-2">Blood Group</label>

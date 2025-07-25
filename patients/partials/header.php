@@ -24,6 +24,8 @@ function isActive($check, $type = 'page')
     }
     return $current_folder === $check ? 'bg-green-100 text-green-600' : '';
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,9 +84,12 @@ function isActive($check, $type = 'page')
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold text-blue-600">MediCare</span>
+                    <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-heartbeat text-white text-xl"></i>
                     </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">MediCore</span>
+                </div>
                 </div>
                 <div class="flex items-center">
                     <div class="hidden md:ml-6 md:flex md:space-x-8">
@@ -92,7 +97,7 @@ function isActive($check, $type = 'page')
                             class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('dashboard.php'); ?>">
                             Dashboard
                         </a>
-                        <a href="<?= $base_path ?>appointments/book_appointment.php" class="inline-flex items-center px-1 pt-1 border-b-2 text-s m font-medium <?= isActive('book_appointment.php');
+                        <a href="<?= $base_path ?>appointments/show_appointment.php" class="inline-flex items-center px-1 pt-1 border-b-2 text-s m font-medium <?= isActive('show_appointment.php');
                           // Also check if we're in appointments folder
                           echo ($current_folder === 'appointments') ? ' text-blue-600 border-blue-600' : '';
                           ?>">
@@ -103,13 +108,24 @@ function isActive($check, $type = 'page')
                             Medical Records
                         </a> -->
                         <a href="<?= $base_path ?>services.php"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('medical_records.php'); ?>">
+                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('services.php'); ?>">
                             Services
                         </a>
                         <a href="<?= $base_path ?>doctors/doctors.php"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('medical_records.php'); ?>">
+                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium <?php echo isActive('doctors.php'); ?>">
                             Doctors
                         </a>
+
+                        <form action="<?= ".././controllers/PatientController.php" ?>" method="POST"
+                            class="inline">
+                            <button type="submit" name="patient_logout"
+                                class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium text-red-600 hover:text-red-800">
+                                Logout
+                            </button>
+                        </form>
+
+
+
                     </div>
                     <div class="flex items-center ml-6">
                         <div class="relative">

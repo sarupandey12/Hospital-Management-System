@@ -7,22 +7,33 @@ session_start();
 
 $patientModal = new Patient($pdo);
 
-// First handle login if login form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    $patient = $patientModal->login($email, $password);
+    $result = $patientModal->login($email, $password);
 
-    if ($patient) {
-        $_SESSION['patient_id'] = $patient['id'];
-        $_SESSION['patient_name'] = $patient['full_name'];
+    if ($result['success']) {
+        $_SESSION['patient_id'] = $result['patient']['id'];
+        $_SESSION['patient_name'] = $result['patient']['full_name'];
         header("Location: ../patients/dashboard.php");
         exit;
     } else {
-        header("Location: ../patients/index.php?error=Invalid credentials.");
+        // Store error in session and redirect back
+        $_SESSION['login_error'] = $result['message'];
+        header("Location: ../patients/index.php");
         exit;
     }
+}
+
+
+// Handle patient logout request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['patient_logout'])) {
+    $patientModal->logout();
+
+    // Redirect *after* calling logout
+    header("Location: ../patients/index.php");
+    exit;
 }
 
 
@@ -32,19 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $gender = $_POST['gender'] ?? '';
-    $date_of_birth = $_POST['date_of_birth'] ?? '';
-    $address = $_POST['address'] ?? '';
-    $blood_group = $_POST['blood_group'] ?? '';
-    $medical_history = $_POST['medical_history'] ?? '';
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+    $blood_group = $_POST['blood_group'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm_password'];
-    // $priority = $_POST['priority']??'';
-    $priority = isset($_POST['priority']) ? intval($_POST['priority']) : null;
 
-    $status = $_POST['status'] ?? '';
-    $emergency = $_POST['is_emergency'] ?? '';
-    $symptoms = $_POST['symptoms'] ?? '';
 
     if (empty($full_name) || empty($email) || empty($phone) || empty($priority)) {
         header("Location: ../patients/register.php?error=Please fill in all required fields.");
@@ -59,15 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'email' => $email,
             'phone' => $phone,
             'gender' => $gender,
-            'date_of_birth' => $date_of_birth,
             'address' => $address,
             'blood_group' => $blood_group,
-            'medical_history' => $medical_history,
             'password' => $password,  // Pass password for hashing inside model
-            'priority' => $priority,
-            'is_emergency' => $emergency,
-            'symptoms' => $symptoms,
-            'status' => $status,
         ];
 
         $success = $patientModal->register($dataArray);

@@ -1,8 +1,8 @@
 <?php
-namespace Enums;
+// src/Enums/Specialization.php
+namespace App\Enums;
 
-enum Specialization: string
-{
+enum Specialization: string {
     case Cardiologist = 'Cardiologist';
     case Dermatologist = 'Dermatologist';
     case Orthopedist = 'Orthopedist';
@@ -14,10 +14,10 @@ enum Specialization: string
     case Ophthalmologist = 'Ophthalmologist';
     case Psychiatrist = 'Psychiatrist';
 
-    // You can also add methods if needed, like for validation or display
     public function getLabel(): string
     {
         return ucfirst(strtolower($this->name));
     }
 }
+
 ?>

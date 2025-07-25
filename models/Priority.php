@@ -13,38 +13,25 @@ class Priority
         $this->pdo = $pdo;
     }
 
-    /**
-     * Get the priority label by ID.
-     */
-    public function getLabelById(int $priorityId): ?string
+    public function getPatientQueue()
     {
-        $stmt = $this->pdo->prepare("SELECT label FROM priority_levels WHERE priority_id = :priorityId");
-        $stmt->execute(['priorityId' => $priorityId]);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['label'] : null;
-    }
-
-    /**
-     * Get full priority details by ID.
-     */
-    public function getDetailsById(int $priorityId): ?array
-    {
-        $stmt = $this->pdo->prepare("SELECT label, description FROM priority_levels WHERE priority_id = :priorityId");
-        $stmt->execute(['priorityId' => $priorityId]);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ?: null;
-    }
-
-    /**
-     * Get all priority levels.
-     *
-     * @return array
-     */
-    public function getAllPriority(): array
-    {
-        $stmt = $this->pdo->query("SELECT * FROM priority_levels ORDER BY priority_id ASC");
+        $stmt = $this->pdo->prepare("
+        SELECT p.*, pl.label AS priority_name, pl.description AS priority_description
+        FROM patients p
+        JOIN priority_levels pl ON p.priority = pl.priority_id
+        ORDER BY p.priority ASC, p.registration_date ASC
+    ");
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getPriorities()
+    {
+        $stmt = $this->pdo->prepare("
+        select * from priority_levels");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
