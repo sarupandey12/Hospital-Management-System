@@ -116,7 +116,7 @@ function isActive($check, $type = 'page')
                             Doctors
                         </a>
 
-                        <form action="<?= ".././controllers/PatientController.php" ?>" method="POST"
+                        <form action="<?= "../../controllers/PatientController.php" ?>" method="POST"
                             class="inline">
                             <button type="submit" name="patient_logout"
                                 class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium text-red-600 hover:text-red-800">
