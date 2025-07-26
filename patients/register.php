@@ -1,7 +1,10 @@
 <?php
+
+
 // require_once("../config/path.php");
 include __DIR__ . '/../layouts/master.php';
 ?>
+<?php session_start(); ?>
 
 
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8  ">
@@ -20,9 +23,9 @@ include __DIR__ . '/../layouts/master.php';
                 <div>
                     <label for="full_name" class="block text-gray-700 font-medium mb-2">Full Name <span
                             class="text-red-500">*</span></label>
-                    <input id="full_name" name="full_name" type="text" required
+                    <input id="full_name" name="full_name" type="text"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['full_name_error']) ? 'border-red-500' : ''; ?>"
-                        value="<?php echo isset($_POST['full_name']) ? htmlspecialchars($_POST['full_name']) : ''; ?>">
+                        value="<?php echo isset($_SESSION['old']['full_name']) ? htmlspecialchars($_SESSION['old']['full_name']) : ''; ?>">
                     <?php if (isset($_GET['full_name_error'])): ?>
                         <p class="text-red-500 text-sm mt-1"><?php echo htmlspecialchars($_GET['full_name_error']); ?>
                         </p>
@@ -32,7 +35,7 @@ include __DIR__ . '/../layouts/master.php';
                 <div>
                     <label for="email" class="block text-gray-700 font-medium mb-2">Email Address <span
                             class="text-red-500">*</span></label>
-                    <input id="email" name="email" type="email" required
+                    <input id="email" name="email" type="email"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['email_error']) ? 'border-red-500' : ''; ?>"
                         value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                     <?php if (isset($_GET['email_error'])): ?>
@@ -43,7 +46,7 @@ include __DIR__ . '/../layouts/master.php';
                 <div>
                     <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number <span
                             class="text-red-500">*</span></label>
-                    <input id="phone" name="phone" type="text" required
+                    <input id="phone" name="phone" type="text"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['phone_error']) ? 'border-red-500' : ''; ?>"
                         value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                     <?php if (isset($_GET['phone_error'])): ?>
@@ -54,7 +57,7 @@ include __DIR__ . '/../layouts/master.php';
                 <div>
                     <label for="gender" class="block text-gray-700 font-medium mb-2">Gender <span
                             class="text-red-500">*</span></label>
-                    <select id="gender" name="gender" required
+                    <select id="gender" name="gender"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['gender_error']) ? 'border-red-500' : ''; ?>">
                         <option value="">Select Gender</option>
                         <option value="Male" <?php echo (isset($_POST['gender']) && $_POST['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
@@ -85,7 +88,7 @@ include __DIR__ . '/../layouts/master.php';
                 <div>
                     <label for="password" class="block text-gray-700 font-medium mb-2">Password <span
                             class="text-red-500">*</span></label>
-                    <input id="password" name="password" type="password" required
+                    <input id="password" name="password" type="password"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['password_error']) ? 'border-red-500' : ''; ?>">
                     <?php if (isset($_GET['password_error'])): ?>
                         <p class="text-red-500 text-sm mt-1"><?php echo htmlspecialchars($_GET['password_error']); ?>
@@ -96,7 +99,7 @@ include __DIR__ . '/../layouts/master.php';
                 <div>
                     <label for="confirm_password" class="block text-gray-700 font-medium mb-2">Confirm Password
                         <span class="text-red-500">*</span></label>
-                    <input id="confirm_password" name="confirm_password" type="password" required
+                    <input id="confirm_password" name="confirm_password" type="password"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['confirm_password_error']) ? 'border-red-500' : ''; ?>">
                     <?php if (isset($_GET['confirm_password_error'])): ?>
                         <p class="text-red-500 text-sm mt-1">
@@ -108,7 +111,7 @@ include __DIR__ . '/../layouts/master.php';
                 <div class="md:col-span-2">
                     <label for="address" class="block text-gray-700 font-medium mb-2">Address <span
                             class="text-red-500">*</span></label>
-                    <textarea id="address" name="address" rows="3" required
+                    <textarea id="address" name="address" rows="3"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3 border <?php echo isset($_GET['address_error']) ? 'border-red-500' : ''; ?>"><?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?></textarea>
                     <?php if (isset($_GET['address_error'])): ?>
                         <p class="text-red-500 text-sm mt-1"><?php echo htmlspecialchars($_GET['address_error']); ?></p>
@@ -204,6 +207,8 @@ include __DIR__ . '/../layouts/master.php';
         });
     });
 </script>
+<?php unset($_SESSION['old']); ?>
+
 
 </body>
 

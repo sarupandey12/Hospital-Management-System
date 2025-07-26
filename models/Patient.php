@@ -38,28 +38,66 @@ class Patient
 
 
 
+    // public function register($dataValues)
+    // {
+    //     // Validate priority value exists in priority_levels table
+    //     if (isset($dataValues['priority'])) {
+    //         $priorityCheck = $this->pdo->prepare("SELECT priority_id FROM priority_levels WHERE priority_id = ?");
+    //         $priorityCheck->execute([$dataValues['priority']]);
+    //         if (!$priorityCheck->fetch()) {
+    //             // Priority doesn't exist, set to NULL or default value
+    //             $dataValues['priority'] = null; // or a default valid priority_id
+    //         }
+    //     }
+
+    //     $hashedPassword = password_hash($dataValues['password'], PASSWORD_BCRYPT);
+
+    //     // Adjusted query with only columns you have values for
+    //     $stmt = $this->pdo->prepare(
+    //         "INSERT INTO patients 
+    //     (full_name, email, password, phone, gender, address, blood_group) 
+    //     VALUES (?, ?, ?, ?, ?, ?, ?)"
+    //     );
+
+    //     return $stmt->execute([
+    //         $dataValues['full_name'],
+    //         $dataValues['email'],
+    //         $hashedPassword,
+    //         $dataValues['phone'],
+    //         $dataValues['gender'],
+    //         $dataValues['address'],
+    //         $dataValues['blood_group'],
+    //     ]);
+    // }
+
     public function register($dataValues)
     {
-        // Validate priority value exists in priority_levels table
+        // Check if email already exists
+        $emailCheck = $this->pdo->prepare("SELECT id FROM patients WHERE email = ?");
+        $emailCheck->execute([$dataValues['email']]);
+        if ($emailCheck->fetch()) {
+            // Return a specific error code for duplicate email
+            return 'email_exists';
+        }
+
+        // Validate priority value exists in priority_levels table (optional)
         if (isset($dataValues['priority'])) {
             $priorityCheck = $this->pdo->prepare("SELECT priority_id FROM priority_levels WHERE priority_id = ?");
             $priorityCheck->execute([$dataValues['priority']]);
             if (!$priorityCheck->fetch()) {
-                // Priority doesn't exist, set to NULL or default value
-                $dataValues['priority'] = null; // or a default valid priority_id
+                $dataValues['priority'] = null;
             }
         }
 
         $hashedPassword = password_hash($dataValues['password'], PASSWORD_BCRYPT);
 
-        // Adjusted query with only columns you have values for
         $stmt = $this->pdo->prepare(
             "INSERT INTO patients 
         (full_name, email, password, phone, gender, address, blood_group) 
         VALUES (?, ?, ?, ?, ?, ?, ?)"
         );
 
-        return $stmt->execute([
+        $result = $stmt->execute([
             $dataValues['full_name'],
             $dataValues['email'],
             $hashedPassword,
@@ -68,7 +106,15 @@ class Patient
             $dataValues['address'],
             $dataValues['blood_group'],
         ]);
+
+        if ($result) {
+            return true;  // success
+        } else {
+            return false; // some other error
+        }
     }
+
+
 
     public function login($usernameOrEmail, $password)
     {

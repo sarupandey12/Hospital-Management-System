@@ -38,8 +38,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['patient_logout'])) {
 
 
 // Then handle registration if register form is submitted
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+//     // Collect form data and sanitize
+//     $full_name = $_POST['full_name'];
+//     $email = $_POST['email'];
+//     $phone = $_POST['phone'];
+//     $gender = $_POST['gender'];
+//     $address = $_POST['address'];
+//     $blood_group = $_POST['blood_group'];
+//     $password = $_POST['password'];
+//     $confirm = $_POST['confirm_password'];
+
+
+//     if (empty($full_name) || empty($email) || empty($phone) || empty($gender) || empty($address) || empty($blood_group) || empty($password) || empty($confirm)) {
+//         header("Location: ../patients/register.php?error=Please fill in all required fields.");
+//         exit();
+//     }
+//       if ($password === $confirm) {
+//         $dataArray = [
+//             'full_name' => $full_name,
+//             'email' => $email,
+//             'phone' => $phone,
+//             'gender' => $gender,
+//             'address' => $address,
+//             'blood_group' => $blood_group,
+//             'password' => $password,  // Pass password for hashing inside model
+//         ];
+
+//         $success = $patientModal->register($dataArray);
+//         if ($success) {
+//             header("Location: ../patients/index.php?success=Registered successfully.");
+//             exit;
+//         } else {
+//             header("Location: ../patients/register.php?error=Registration failed. Try again.");
+//             exit;
+//         }
+//     } else {
+//         header("Location: ../patients/register.php?error=Passwords do not match.");
+//         exit();
+//     }
+// }
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-    // Collect form data and sanitize
+    // Collect form data and sanitize (add proper sanitization in production)
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
@@ -49,14 +91,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $password = $_POST['password'];
     $confirm = $_POST['confirm_password'];
 
+    // $_SESSION['old'] = $_POST;  // Save old values before redirect
+
+    // if (empty($full_name)) {
+
+        session_start();
+    //     $_SESSION['old'] = $_POST;
+    //     header("Location: ../patients/register.php?full_name_error=Full+name+is+required");
+    //     exit();
+    // }
 
     if (empty($full_name) || empty($email) || empty($phone) || empty($gender) || empty($address) || empty($blood_group) || empty($password) || empty($confirm)) {
         header("Location: ../patients/register.php?error=Please fill in all required fields.");
         exit();
     }
-    // print_r($_POST);
-    // exit;
-
     if ($password === $confirm) {
         $dataArray = [
             'full_name' => $full_name,
@@ -65,12 +113,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'gender' => $gender,
             'address' => $address,
             'blood_group' => $blood_group,
-            'password' => $password,  // Pass password for hashing inside model
+            'password' => $password,
         ];
 
-        $success = $patientModal->register($dataArray);
-        if ($success) {
+
+        $result = $patientModal->register($dataArray);
+        if ($result === true) {
             header("Location: ../patients/index.php?success=Registered successfully.");
+            exit;
+        } elseif ($result === 'email_exists') {
+            header("Location: ../patients/register.php?error=Email already exists. Please use a different email.");
             exit;
         } else {
             header("Location: ../patients/register.php?error=Registration failed. Try again.");
@@ -81,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         exit();
     }
 }
+
 
 // If neither login nor register form is submitted
 // header("Location: ../patients/index.php");
