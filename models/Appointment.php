@@ -52,6 +52,31 @@ class Appointment
         }
     }
 
+    public function countAppointments()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) AS total_appointments FROM appointments");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_appointments'];
+    }
+
+
+    public function getRecentAppointmentsWithPatientName()
+    {
+        $sql = "SELECT 
+                appointments.*, 
+                patients.name AS patient_name 
+            FROM appointments
+            JOIN patients ON appointments.patient_id = patients.id
+            WHERE appointments.created_at >= NOW() - INTERVAL 1 DAY
+            ORDER BY appointments.created_at DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     public function getAllAppointments()
     {

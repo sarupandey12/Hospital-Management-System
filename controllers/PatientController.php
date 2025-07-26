@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $confirm = $_POST['confirm_password'];
 
 
-    if (empty($full_name) || empty($email) || empty($phone) || empty($priority)) {
+    if (empty($full_name) || empty($email) || empty($phone) || empty($gender) || empty($address) || empty($blood_group) || empty($password) || empty($confirm)) {
         header("Location: ../patients/register.php?error=Please fill in all required fields.");
         exit();
     }

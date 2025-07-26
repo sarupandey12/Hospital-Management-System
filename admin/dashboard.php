@@ -23,21 +23,22 @@ require_once __DIR__ . '/session.php';
 
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
       <h3 class="text-lg font-semibold text-gray-600">Doctors</h3>
-      <!-- <p class="text-3xl font-bold text-green-600 mt-2">5</p> -->
-      <div id="doctor-count"><span class="text-3xl font-bold text-green-600 mt-2"
-          id="doctor-count-value">Loading...</span></div>
+      <div id="doctor-count">
+        <span class="text-3xl font-bold text-green-600 mt-2" id="doctor-count-value">Loading...</span>
+      </div>
 
     </div>
 
     <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+
       <h3 class="text-lg font-semibold text-gray-600">Appointments</h3>
-      <p class="text-3xl font-bold text-green-600 mt-2">20</p>
+      <div id="doctor-count">
+
+        <span class="text-3xl font-bold text-green-600 mt-2" id="appointment-count-value">Loading...</span>
+      </div>
     </div>
 
-    <!-- <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
-      <h3 class="text-lg font-semibold text-gray-600">Departments</h3>
-      <p class="text-3xl font-bold text-green-600 mt-2">12</p>
-    </div> -->
+
   </div>
 
   <!-- Recent Activity -->
